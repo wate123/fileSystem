@@ -1,10 +1,13 @@
 
 #include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
 
 // main private file type
-typedef FileInternals {
-    FILE* fp;
-    
+typedef struct FileInternals {
+    FILE *f;
+    int fd;     /*file descriptor*/
+    int flag;
 } FileInternals;
 
 // file type used by user code
@@ -14,6 +17,7 @@ typedef FileInternals* File;
 typedef enum {
 	READ_ONLY, READ_WRITE
 } FileMode;
+
 
 // error codes set in global 'fserror' by filesystem functions
 typedef enum  {
@@ -74,5 +78,4 @@ void fs_print_error(void);
 
 // filesystem error code set (set by each filesystem function)
 extern FSError fserror;
- 
-}
+

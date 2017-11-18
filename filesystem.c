@@ -2,22 +2,58 @@
 // Created by jun on 11/14/17.
 //
 
+
+#include "fcntl.h"
 #include "filesystem.h"
+#include "softwaredisk.h"
+#include "softwaredisk.c"
+
+struct Node{
+    int data;
+    struct Node *next;
+};
+
 
 FSError fsError;
 
 // open existing file with pathname 'name' and access mode 'mode'.  Current file
 // position is set at byte 0.  Returns NULL on error. Always sets 'fserror' global.
 File open_file(char *name, FileMode mode){
-    File f;
+    FileInternals *f;
     fsError = FS_NONE;
-
+    int i, fd;
+    
+    if (mode != READ_ONLY) return NULL;
+    
+    if (mode == READ_ONLY) {
+        fd = open(name, O_RDONLY);
+        if (fd < 0){
+            fserror = FS_FILE_NOT_FOUND;
+            return NULL;
+        }
+        f->fd = fd;
+    }
+    return f;
 }
 
 // create and open new file with pathname 'name' and access mode 'mode'.  Current file
 // position is set at byte 0.  Returns NULL on error. Always sets 'fserror' global.
 File create_file(char *name, FileMode mode){
+    FileInternals *f;
     fsError = FS_NONE;
+    int i, fd;
+    
+    if (mode != READ_WRITE) return NULL;
+    //no-flag added
+    f = malloc(NUM_BLOCKS * SOFTWARE_DISK_BLOCK_SIZE);
+
+    }
+    if (mode == READ_WRITE) {
+        fd = creat(name, O_RDWR);
+        f->fd = fd;
+    }
+
+    
 
 }
 
