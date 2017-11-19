@@ -1,11 +1,10 @@
 
 #include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-
+#include "softwaredisk.c"
 // main private file type
 typedef struct FileInternals {
     FILE *f;
+	void *buff[SOFTWARE_DISK_BLOCK_SIZE];
     int fd;     /*file descriptor*/
     int flag;
 } FileInternals;

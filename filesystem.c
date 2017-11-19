@@ -3,10 +3,11 @@
 //
 
 
-#include "fcntl.h"
 #include "filesystem.h"
 #include "softwaredisk.h"
 #include "softwaredisk.c"
+#include <fcntl.h>
+#include <unistd.h>
 
 struct Node{
     int data;
@@ -14,53 +15,46 @@ struct Node{
 };
 
 
-FSError fsError;
+FSError fserror;
 
 // open existing file with pathname 'name' and access mode 'mode'.  Current file
 // position is set at byte 0.  Returns NULL on error. Always sets 'fserror' global.
 File open_file(char *name, FileMode mode){
-    FileInternals *f;
-    fsError = FS_NONE;
-    int i, fd;
-    
     if (mode != READ_ONLY) return NULL;
-    
-    if (mode == READ_ONLY) {
-        fd = open(name, O_RDONLY);
-        if (fd < 0){
-            fserror = FS_FILE_NOT_FOUND;
-            return NULL;
-        }
-        f->fd = fd;
+    FileInternals *f;
+    fserror = FS_NONE;
+    int fd;
+    fd = open(name, O_RDONLY);
+    if (fd < 0){
+        fserror = FS_FILE_NOT_FOUND;
+        return NULL;
     }
+    f->fd;
     return f;
 }
 
 // create and open new file with pathname 'name' and access mode 'mode'.  Current file
 // position is set at byte 0.  Returns NULL on error. Always sets 'fserror' global.
 File create_file(char *name, FileMode mode){
-    FileInternals *f;
-    fsError = FS_NONE;
-    int i, fd;
-    
     if (mode != READ_WRITE) return NULL;
-    //no-flag added
+    File f;
     f = malloc(NUM_BLOCKS * SOFTWARE_DISK_BLOCK_SIZE);
-
+    fserror = FS_NONE;
+    //no-flag added
+    f->fd = open(name, O_RDWR|O_CREAT|O_TRUNC );
+    if(f->fd < 0 ){
+        fserror = FS_OUT_OF_SPACE;
+        return NULL;
     }
-    if (mode == READ_WRITE) {
-        fd = creat(name, O_RDWR);
-        f->fd = fd;
-    }
-
-    
+    return f;
 
 }
 
 // close 'file'.  Always sets 'fserror' global.
 void close_file(File file){
-    fsError = FS_NONE;
-    
+    if (file->f && close(file->fd) == 0){
+        fserror = FS_NONE;
+    }
 }
 
 // read at most 'numbytes' of data from 'file' into 'buf', starting at the
@@ -68,7 +62,10 @@ void close_file(File file){
 // then a return value less than 'numbytes' signals this condition. Always sets
 // 'fserror' global.
 unsigned long read_file(File file, void *buf, unsigned long numbytes){
+    unsigned long bytes_read=0L;
 
+    fserror = FS_NONE;
+    if(!file->f || )
 }
 
 // write 'numbytes' of data from 'buf' into 'file' at the current file position.
