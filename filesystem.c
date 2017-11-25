@@ -65,14 +65,28 @@ unsigned long read_file(File file, void *buf, unsigned long numbytes){
     unsigned long bytes_read=0L;
 
     fserror = FS_NONE;
-    if(!file->f || )
+    if(!file->f || !lseek(file->fd, 0, SEEK_CUR)){
+        fserror = FS_FILE_NOT_OPEN;
+    } else{
+        bytes_read = (unsigned long) read(0, buf, numbytes);
+    }
+    return  bytes_read;
 }
 
 // write 'numbytes' of data from 'buf' into 'file' at the current file position.
 // Returns the number of bytes written. On an out of space error, the return value may be
 // less than 'numbytes'.  Always sets 'fserror' global.
 unsigned long write_file(File file, void *buf, unsigned long numbytes){
+    unsigned long bytes_written=0L;
+    char save[numbytes];
 
+    fserror=FS_NONE;
+    if(! file->f){
+        fserror=FS_FILE_READ_ONLY;
+        return 0L;
+    } else{
+        bytes_written = write()
+    }
 }
 
 // sets current position in file to 'bytepos', always relative to the beginning of file.
