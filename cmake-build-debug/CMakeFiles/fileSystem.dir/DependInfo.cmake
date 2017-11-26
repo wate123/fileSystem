@@ -4,9 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/78361/CLionProjects/fileSystem/exercisesoftwaredisk.c" "C:/Users/78361/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/exercisesoftwaredisk.c.obj"
-  "C:/Users/78361/CLionProjects/fileSystem/filesystem.c" "C:/Users/78361/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/filesystem.c.obj"
-  "C:/Users/78361/CLionProjects/fileSystem/softwaredisk.c" "C:/Users/78361/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/softwaredisk.c.obj"
+  "/home/jun/CLionProjects/fileSystem/filesystem.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/filesystem.c.o"
+  "/home/jun/CLionProjects/fileSystem/formatfs.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/formatfs.c.o"
+  "/home/jun/CLionProjects/fileSystem/softwaredisk.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/softwaredisk.c.o"
+  "/home/jun/CLionProjects/fileSystem/testfs0.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/testfs0.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

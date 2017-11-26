@@ -8,6 +8,7 @@
 #include "softwaredisk.c"
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 struct Node{
     int data;
@@ -82,30 +83,32 @@ unsigned long write_file(File file, void *buf, unsigned long numbytes){
 
     fserror=FS_NONE;
     if(! file->f){
-        fserror=FS_FILE_READ_ONLY;
+        fserror=FS_FILE_NOT_OPEN;
         return 0L;
-    } else{
-        bytes_written = write()
     }
+    bytes_written = (unsigned long) write(file->fd, buf, numbytes);
+    return bytes_written;
 }
 
 // sets current position in file to 'bytepos', always relative to the beginning of file.
 // Seeks past the current end of file should extend the file. Always sets 'fserror'
 // global.
 void seek_file(File file, unsigned long bytepos){
-
+    if (! file->f || )
 }
 
 // returns the current length of the file in bytes. Always sets 'fserror' global.
 unsigned long file_length(File file){
-
+    struct stat buf;
+    fstat(file->fd, &buf);
+    return (unsigned long) buf.st_size;
 }
 
 // deletes the file named 'name', if it exists and if the file is closed.
 // Fails if the file is currently open. Returns 1 on success, 0 on failure.
 // Always sets 'fserror' global.
 int delete_file(char *name){
-
+    if()
 }
 
 // determines if a file with 'name' exists and returns 1 if it exists, otherwise 0.
