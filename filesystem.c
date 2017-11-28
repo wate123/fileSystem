@@ -11,21 +11,11 @@
 #include <sys/stat.h>
 #include <memory.h>
 #include <values.h>
-#include <errno.h>
 
-struct Node{
-    int data;
-    struct Node *next;
-};
+
 
 int getAttr(const char *path, struct stat *statbuf)
 {
-
-    /* int retstat = 0;
-      char fpath[PATH_MAX];
-      log_msg("\nsfs_getattr(path=\"%s\", statbuf=0x%08x)\n",
-        path, statbuf);
-      return retstat;*/
     int path_len = (int) strlen(path);
     printf("%s: %s\n", __FUNCTION__, path);
 
