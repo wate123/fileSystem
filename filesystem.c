@@ -9,12 +9,48 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <memory.h>
+#include <values.h>
+#include <errno.h>
 
 struct Node{
     int data;
     struct Node *next;
 };
 
+int getAttr(const char *path, struct stat *statbuf)
+{
+
+    /* int retstat = 0;
+      char fpath[PATH_MAX];
+      log_msg("\nsfs_getattr(path=\"%s\", statbuf=0x%08x)\n",
+        path, statbuf);
+      return retstat;*/
+    int path_len = (int) strlen(path);
+    printf("%s: %s\n", __FUNCTION__, path);
+
+    if ( (path_len == 1) && path[0] == '/') {
+        statbuf->st_mode = S_IFDIR | S_IRWXU | S_IRWXG | S_IRWXO;
+        statbuf->st_uid = 0;
+        statbuf->st_gid = 0;
+        statbuf->st_nlink = 1;
+        statbuf->st_ino = 0;
+    } else {
+        int i = 0;
+        while(i<PATH_MAX){
+            int size;
+            //int block_count;
+            statbuf->st_mode = (S_IFREG | S_IRWXU | S_IRWXG | S_IRWXO) & ~S_IXUSR & ~S_IXGRP & ~S_IXOTH;
+            statbuf->st_nlink = 1;
+            statbuf->st_uid = 0;
+            statbuf->st_gid = 0;
+            statbuf->st_size = size;
+            //  statbuf->st_blocks = block_count;               // number of 512B blocks allocated
+        }
+    }
+
+    return 0;
+}
 
 FSError fserror;
 
@@ -108,7 +144,7 @@ unsigned long file_length(File file){
 // Fails if the file is currently open. Returns 1 on success, 0 on failure.
 // Always sets 'fserror' global.
 int delete_file(char *name){
-    if()
+
 }
 
 // determines if a file with 'name' exists and returns 1 if it exists, otherwise 0.
