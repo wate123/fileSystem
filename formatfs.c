@@ -10,7 +10,7 @@
 #include "softwaredisk.h"
 #include "filesystem.h"
 
-#define DIRECT_BLOCK 14;
+#define DIRECT_BLOCK 13;
 #define INDIRECT_BLOCK 1;
 #define MAXFILES = 850;
 #define MAXFILENAMESIZE 255;
@@ -43,19 +43,36 @@ typedef struct FileInternal{
 };
 
 typedef struct DirEntry{
-    char *filenames[255];
-    int filesizes[100];
-    int fileinodes[100];
-    int num_of_files;
+    uint8_t file_is_open;
+    int inode_index;
 }DirEntry;
 
+typedef struct bitmap{
+    unsigned long bit_map_index, shift_index;
+    unsigned long bit_position, setOrUnsetBit;
+    unsigned long my_bitmap[8];
+    int iBitmap[54];
+    int dBitmap[4096];
+}bitmap;
 
 int init_bitmap(){
-    int ibit[456];
-    memset(ibit, 0, sizeof(ibit));
-    return  1;
+    bitmap.iBitmap = {0};
+    bitmap.dBitmap = {0};
 };
 
+void setBitmap(bit_position){
+    bitmap b;
+    b.bit_map_index = bit_position/8;
+    shift_Index = bit_position %8;
+    b.iBitmap[b.bit_map_index] |= 1<< (shift_Index);
+}
+
+void unsetBitmap(bit_position){
+    bitmap b;
+    b.bit_map_index = bit_position/8;
+    shift_Index = bit_position %8;
+    b.iBitmap[b.bit_map_index] &= ~1<< (shift_Index);
+}
 
 
 
