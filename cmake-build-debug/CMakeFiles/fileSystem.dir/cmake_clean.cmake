@@ -1,12 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/fileSystem.dir/softwaredisk.c.obj"
-  "CMakeFiles/fileSystem.dir/filesystem.c.obj"
-  "CMakeFiles/fileSystem.dir/testfs0.c.obj"
-  "CMakeFiles/fileSystem.dir/formatfs.c.obj"
+  "CMakeFiles/fileSystem.dir/softwaredisk.c.o"
+  "CMakeFiles/fileSystem.dir/filesystem.c.o"
+  "CMakeFiles/fileSystem.dir/formatfs.c.o"
   "fileSystem.pdb"
-  "fileSystem.exe"
-  "fileSystem.exe.manifest"
-  "libfileSystem.dll.a"
+  "fileSystem"
 )
 
 # Per-language clean rules from dependency scanning.

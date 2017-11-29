@@ -225,10 +225,6 @@ int _find_inode(int inode, char *dir_name) {
     int i = 0;
     do {
         struct dir_mapping map;
-        int ret = read_t(inode, i, &map, sizeof(struct dir_mapping));
-        if (ret<=0) { // nothing to read
-            return -1;  // error: not found
-        }
         if (strcmp(map.dir, dir_name)==0) {
             return map.inode_number;    // found
         }

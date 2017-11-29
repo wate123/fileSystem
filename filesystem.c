@@ -4,7 +4,6 @@
 
 
 #include "filesystem.h"
-#include "softwaredisk.h"
 #include "softwaredisk.c"
 #include <fcntl.h>
 #include <unistd.h>
@@ -12,7 +11,6 @@
 #include <memory.h>
 #include <values.h>
 #include <errno.h>
-#include <limits.h>
 #include "formatfs.c"
 
 
@@ -99,24 +97,24 @@ void close_file(File file){
 // then a return value less than 'numbytes' signals this condition. Always sets
 // 'fserror' global.
 unsigned long read_file(File file, void *buf, unsigned long numbytes){
-    struct inode *inode_ptr = GET_INODE_PTR(inode_number);
+//    struct inode *inode_ptr = GET_INODE_PTR(inode_number);
     void *local_buf = buf;
     unsigned long read_count = 0L;
 
-    int block_id = calc_data_block_id(offset);
-    int block_offset = calc_data_block_offset(offset);
-    int ret = read_sd_block(local_buf,);
+//    int block_id = calc_data_block_id(offset);
+//    int block_offset = calc_data_block_offset(offset);
+//    int ret = read_sd_block(local_buf,);
 
-    while(1) {
-        local_buf += ret;
-        read_count += ret;
-        block_id++;
-        if(read_count>=count)
-            break;
+//    while(1) {
+//        local_buf += ret;
+//        read_count += ret;
+//        block_id++;
+//        if(read_count>=count)
+//            break;
         //no more offset
-        ret = read_from_block(inode_ptr, block_id, 0, local_buf, count-read_count);
-    }
-    return read_count;
+//        ret = read_from_block(inode_ptr, block_id, 0, local_buf, count-read_count);
+//    }
+//    return read_count;
 }
 
 // write 'numbytes' of data from 'buf' into 'file' at the current file position.
