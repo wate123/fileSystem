@@ -135,10 +135,11 @@ int get_next_block() {
     return i;
 }
 
-
+//add entry of directory
 void add_entry(int dir_inode, const char *entry_name, int entry_inode) {
 }
 
+//create directory base on parent inode and the directory name
 int create_directory(int parent_inode, const char *dir_name) {
     // allocate inode
     int child_inode = get_next_inode();
@@ -163,6 +164,7 @@ int create_directory(int parent_inode, const char *dir_name) {
     return child_inode;
 }
 
+// create file with parent inode and name
 int create_file_with_inode(int parent_inode, const char *filename) {
     int child_inode = get_next_inode();
 
@@ -234,6 +236,7 @@ int _find_inode(int inode, char *dir_name) {
     } while (1);
 }
 
+//find inode base on the path
 int find_inode(const char *path) {
     // root dir
     int inode = 0;
@@ -260,18 +263,6 @@ int find_inode(const char *path) {
 
 int main(int argc, char *argv[]) {
     init_software_disk();
-    if(argc == 1) {
-        printf("Usage: %s [directory]\n", *argv);
-        exit(0);
-    }
-    struct dirent *dp;
-    DIR *dirp = opendir(argv[1]);
-    while ((dp = readdir(dirp)) != NULL) {
-        puts(dp->d_name);
-    }
-
-    closedir(dirp);
-
     return 0;
 
 }

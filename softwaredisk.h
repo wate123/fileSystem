@@ -7,10 +7,10 @@
 
 // software disk error codes
 typedef enum  {
-  SD_NONE,
-  SD_NOT_INIT,               // software disk not initialized
-  SD_ILLEGAL_BLOCK_NUMBER,   // specified block number exceeds size of software disk
-  SD_INTERNAL_ERROR          // the software disk has failed
+    SD_NONE,
+    SD_NOT_INIT,               // software disk not initialized
+    SD_ILLEGAL_BLOCK_NUMBER,   // specified block number exceeds size of software disk
+    SD_INTERNAL_ERROR          // the software disk has failed
 } SDError;
 
 // function prototypes for software disk API

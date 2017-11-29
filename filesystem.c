@@ -12,6 +12,7 @@
 #include <memory.h>
 #include <values.h>
 #include <errno.h>
+#include <limits.h>
 #include "formatfs.c"
 
 

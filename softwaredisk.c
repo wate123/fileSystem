@@ -56,7 +56,7 @@ unsigned long software_disk_size() {
     return NUM_BLOCKS;
 }
 
-// writes a block of data from 'buf' at location 'blocknum'.  Blocks are numbered 
+// writes a block of data from 'buf' at location 'blocknum'.  Blocks are numbered
 // from 0.  The buffer 'buf' must be of size SOFTWARE_DISK_BLOCK_SIZE.  Returns 1
 // on success or 0 on failure.  Always sets global 'sderror'.
 int write_sd_block(void *buf, unsigned long blocknum) {
