@@ -47,17 +47,29 @@ FSError fserror;
 // open existing file with pathname 'name' and access mode 'mode'.  Current file
 // position is set at byte 0.  Returns NULL on error. Always sets 'fserror' global.
 File open_file(char *name, FileMode mode){
-    if (mode != READ_ONLY) return NULL;
-    FileInternals *f;
-    fserror = FS_NONE;
+//    if (mode != READ_ONLY) return NULL;
+//    FileInternals *f;
+//    fserror = FS_NONE;
+//    int fd;
+//    fd = open(name, O_RDONLY);
+//    if (fd < 0){
+//        fserror = FS_FILE_NOT_FOUND;
+//        return NULL;
+//    }
+//    f->fd;
+//    return f;
+    int retstat = 0;
     int fd;
-    fd = open(name, O_RDONLY);
-    if (fd < 0){
-        fserror = FS_FILE_NOT_FOUND;
-        return NULL;
+    fd = open(name, fi->flags);
+
+    if(fd == -1) {
+        return -errno;
     }
-    f->fd;
-    return f;
+
+    // Save file handle with fuse_file_info struct
+    fi->fh = fd;
+
+    return retstat;
 }
 
 // create and open new file with pathname 'name' and access mode 'mode'.  Current file
