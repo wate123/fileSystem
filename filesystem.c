@@ -11,9 +11,11 @@
 #include <sys/stat.h>
 #include <memory.h>
 #include <values.h>
+#include <errno.h>
+#include "formatfs.c"
 
 
-
+//get attribute of files
 int getAttr(const char *path, struct stat *statbuf)
 {
     int path_len = (int) strlen(path);
@@ -60,14 +62,10 @@ File open_file(char *name, FileMode mode){
 //    return f;
     int retstat = 0;
     int fd;
-    fd = open(name, fi->flags);
 
     if(fd == -1) {
         return -errno;
     }
-
-    // Save file handle with fuse_file_info struct
-    fi->fh = fd;
 
     return retstat;
 }
@@ -80,7 +78,6 @@ File create_file(char *name, FileMode mode){
     f = malloc(NUM_BLOCKS * SOFTWARE_DISK_BLOCK_SIZE);
     fserror = FS_NONE;
     //no-flag added
-    f->fd = open(name, O_RDWR|O_CREAT|O_TRUNC );
     if(f->fd < 0 ){
         fserror = FS_OUT_OF_SPACE;
         return NULL;
@@ -101,15 +98,24 @@ void close_file(File file){
 // then a return value less than 'numbytes' signals this condition. Always sets
 // 'fserror' global.
 unsigned long read_file(File file, void *buf, unsigned long numbytes){
-    unsigned long bytes_read=0L;
+    struct inode *inode_ptr = GET_INODE_PTR(inode_number);
+    void *local_buf = buf;
+    unsigned long read_count = 0L;
 
-    fserror = FS_NONE;
-    if(!file->f || !lseek(file->fd, 0, SEEK_CUR)){
-        fserror = FS_FILE_NOT_OPEN;
-    } else{
-        bytes_read = (unsigned long) read(0, buf, numbytes);
+    int block_id = calc_data_block_id(offset);
+    int block_offset = calc_data_block_offset(offset);
+    int ret = read_sd_block(local_buf,);
+
+    while(1) {
+        local_buf += ret;
+        read_count += ret;
+        block_id++;
+        if(read_count>=count)
+            break;
+        //no more offset
+        ret = read_from_block(inode_ptr, block_id, 0, local_buf, count-read_count);
     }
-    return  bytes_read;
+    return read_count;
 }
 
 // write 'numbytes' of data from 'buf' into 'file' at the current file position.

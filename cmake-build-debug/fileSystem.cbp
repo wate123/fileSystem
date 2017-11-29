@@ -84,6 +84,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/jun/CLionProjects/fileSystem/file.c">
+			<Option target="fileSystem"/>
+		</Unit>
 		<Unit filename="/home/jun/CLionProjects/fileSystem/filesystem.c">
 			<Option target="fileSystem"/>
 		</Unit>

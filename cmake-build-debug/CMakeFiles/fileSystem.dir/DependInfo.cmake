@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/jun/CLionProjects/fileSystem/file.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/file.c.o"
   "/home/jun/CLionProjects/fileSystem/filesystem.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/filesystem.c.o"
   "/home/jun/CLionProjects/fileSystem/formatfs.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/formatfs.c.o"
   "/home/jun/CLionProjects/fileSystem/softwaredisk.c" "/home/jun/CLionProjects/fileSystem/cmake-build-debug/CMakeFiles/fileSystem.dir/softwaredisk.c.o"

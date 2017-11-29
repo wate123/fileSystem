@@ -7,7 +7,6 @@ typedef struct FileInternals {
 	void *buff[SOFTWARE_DISK_BLOCK_SIZE];
     int fd;     /*file descriptor*/
     char * map;
-    int flag;
 } FileInternals;
 
 // file type used by user code

@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/fileSystem.dir/filesystem.c.o"
   "CMakeFiles/fileSystem.dir/testfs0.c.o"
   "CMakeFiles/fileSystem.dir/formatfs.c.o"
+  "CMakeFiles/fileSystem.dir/file.c.o"
   "fileSystem.pdb"
   "fileSystem"
 )

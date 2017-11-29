@@ -123,6 +123,33 @@ fileSystem/fast:
 	$(MAKE) -f CMakeFiles/fileSystem.dir/build.make CMakeFiles/fileSystem.dir/build
 .PHONY : fileSystem/fast
 
+file.o: file.c.o
+
+.PHONY : file.o
+
+# target to build an object file
+file.c.o:
+	$(MAKE) -f CMakeFiles/fileSystem.dir/build.make CMakeFiles/fileSystem.dir/file.c.o
+.PHONY : file.c.o
+
+file.i: file.c.i
+
+.PHONY : file.i
+
+# target to preprocess a source file
+file.c.i:
+	$(MAKE) -f CMakeFiles/fileSystem.dir/build.make CMakeFiles/fileSystem.dir/file.c.i
+.PHONY : file.c.i
+
+file.s: file.c.s
+
+.PHONY : file.s
+
+# target to generate assembly for a file
+file.c.s:
+	$(MAKE) -f CMakeFiles/fileSystem.dir/build.make CMakeFiles/fileSystem.dir/file.c.s
+.PHONY : file.c.s
+
 filesystem.o: filesystem.c.o
 
 .PHONY : filesystem.o
@@ -240,6 +267,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... fileSystem"
+	@echo "... file.o"
+	@echo "... file.i"
+	@echo "... file.s"
 	@echo "... filesystem.o"
 	@echo "... filesystem.i"
 	@echo "... filesystem.s"

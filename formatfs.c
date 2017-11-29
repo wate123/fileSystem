@@ -23,7 +23,11 @@
 #define data_bitmap_block 2;
 #define inode_bitmap_block 1;
 #define NUM_INODES 456;
+char global_hd_file[850];
+char *global_map;
 
+//contain inode number, mode, timestamp, type, size, number of block of inode, number of direct block,
+// one indirect block
 typedef struct inode{
     uint64_t i_number; // number of Inode
     char mode; // can this file be read/written/executed?
@@ -31,26 +35,31 @@ typedef struct inode{
     int i_type;
     int i_size;
     int i_blocks;
-    int direct_blk[2];
+    int direct_blk[14];
     int indirect_blk;
     int file_num;
 }inode;
 
-typedef struct indirecInode{
-
-}indirecInode;
-
+/*
+ * information about inode, inode offset, data offset,  next available inode, next available block
+ */
 typedef struct FileInternal{
-    int position; // position of files
-
-
+    int inode_offset;
+    int data_offset;
+    int next_available_inode;
+    int next_available_blk;
 };
 
-typedef struct DirEntry{
-    uint8_t file_is_open;
-    int inode_index;
-}DirEntry;
+struct FileInternal* global_node;
+/*
+ * inode number.
+ */
+typedef struct dir_mapping{
+    char dir[10];
+    int inode_number;
+}DIR_NODE;
 
+//bitmap struct
 typedef struct {
     char* bits;
     int size;
@@ -94,26 +103,35 @@ int get_bit(bitvector* vec, int index) {
         return 0;
     }
 }
-
+/*
+ * find the next inode
+ */
 int get_next_inode() {
-    FileInternals f;
-    int i = f->next_available_inode;
-    f->next_available_inode++;
+    int i = global_node->next_available_inode;
+    global_node->next_available_inode++;
     return i;
 }
 
+/*
+ * Get the inode pointer
+ */
 struct inode* GET_INODE_PTR(int inode_number) {
-    FileInternals f;
-    return (struct inode*)f.map + f->inode_offset+inode_number*(sizeof(struct inode));
+    return (struct inode*)global_map+ global_node->inode_offset+inode_number*(sizeof(struct inode));
 }
 
+/*
+ * Get block pointer
+ */
 void* GET_BLK_PTR(int blk_number) {
-    return (struct inode*)global_map+global_sb->inode_offset+blk_number*(sizeof(struct inode));
+    return (struct inode*)global_map+global_node->inode_offset+blk_number*(sizeof(struct inode));
 }
 
+/*
+ * find the next block
+ */
 int get_next_block() {
-    int i = global_sb->next_available_blk;
-    global_sb->next_available_blk++;
+    int i = global_node->next_available_blk;
+    global_node->next_available_blk++;
     return i;
 }
 
@@ -190,16 +208,6 @@ int* get_blk_in_inode(struct inode *inode, int blk_number) {
     }
 }
 
-
-inode* create_inode(char type,int size){
-    inode *new = (inode *)malloc(sizeof(inode));
-    new->size=size;
-    new->num_of_blocks = size/SOFTWARE_DISK_BLOCK_SIZE + ((size%SOFTWARE_DISK_BLOCK_SIZE)!=0);
-    new->type = type;
-    return new;
-}
-
-
 /**
  * @brief Find file or directory in a directory
  * @retval -1 File not found
@@ -235,7 +243,6 @@ int find_inode(const char *path) {
     strncpy(tmp_path, path, 65535);
     pch = strtok(tmp_path, "/");
     while (pch != NULL) {
-        printf("DEBUG: PCH = %s\n", pch);
         // find the child item in the current directory *inode
         inode = _find_inode(inode, pch);
         if (inode==-1) {
@@ -250,22 +257,6 @@ int find_inode(const char *path) {
     return inode;
 }
 
-int write_inode(int fsid,inode *ptr,int inum){
-    //printf("write_inode called at address %d\n",inode_start_address + (inum*inode_size));
-    //allocate size of an inode of memory to temp
-    char *temp = (char*)malloc(sizeof(char)*inode_size);
-    temp = (char*)ptr;
-    //calculate the address of the inode
-    int t = inode_start_addresss + (inum*inode_size);
-
-    //TODO change the Fseek
-    t = fseek(disk[fsid],t,SEEK_SET);
-
-    //printf("in inodeWrite seek returned: %d\n",t );
-    if(t!=0) return 1;
-    fwrite(temp,1,inode_size,disk[fsid]);
-    return 0;
-}
 
 int main(int argc, char *argv[]) {
     init_software_disk();
